@@ -1,19 +1,19 @@
-using System.Text.Json.Serialization;
 using Flunt.Notifications;
 using Flunt.Validations;
 
 namespace CalculatorApi.Domain.Commands;
 
-public abstract class TaxCalculateCommand : Notifiable<Notification>, ICommand
+public class TaxCalculateCommand : Notifiable<Notification>, ICommand
 {
-    public int? ValorInicial { get; set; } = default;
-    public int? Meses { get; set; } = default;
+    public double ValorInicial { get; set; }
+    public int Meses { get; set; }
 
-    public virtual bool Validate()
+    public bool Validate()
     {
-        // AddNotifications(new Contract<TaxCalculateCommand>().Requires()
-        //     .IsNotNullOrWhiteSpace(ValorInicial, nameof(ValorInicial))
-        // );
+        AddNotifications(new Contract<TaxCalculateCommand>().Requires()
+            .IsGreaterThan(ValorInicial, 0, nameof(ValorInicial), "Valor Inicial precisa ser maior que 0")
+            .IsGreaterThan(Meses, 0, nameof(Meses), "Quantidade de meses precisa ser maior que 0")
+        );
         return IsValid;
     }
 }
