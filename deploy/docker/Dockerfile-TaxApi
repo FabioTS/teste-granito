@@ -1,0 +1,23 @@
+FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS publish
+
+WORKDIR /src
+COPY . .
+
+# Options: [Debug, Release]
+ARG PUBLISH_MODE="Debug"
+ENV PUBLISH_MODE="${PUBLISH_MODE}"
+RUN dotnet publish "TaxApi.Api/" -c ${PUBLISH_MODE} -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine AS base
+
+WORKDIR /app
+COPY --from=publish /app/publish .
+
+# Options: [Development, Staging, Production]
+ARG ASPNETCORE_ENV_HOST="Development"
+ENV ASPNETCORE_ENVIRONMENT="${ASPNETCORE_ENV_HOST}"
+
+CMD ["dotnet","TaxApi.Api.dll"]
+
+# deploy: docker build -f deploy\docker\Dockerfile-TaxApi -t taxapi:local --build-arg ASPNETCORE_ENV_HOST=Development --build-arg PUBLISH_MODE=Debug TaxApi/
+# run: docker run -p 5010:80 --name TaxApi taxapi:local
