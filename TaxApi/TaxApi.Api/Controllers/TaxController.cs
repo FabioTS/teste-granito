@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace TaxApi.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("tax")]
 public class TaxController : ControllerBase
 {
     private readonly ILogger<TaxController> _logger;
