@@ -1,3 +1,4 @@
+using System.Globalization;
 using CalculatorApi.Domain.Services;
 
 namespace CalculatorApi.Api.Services;
@@ -38,7 +39,7 @@ public class TaxService : ITaxService
 
         var result = await response.Content.ReadAsStringAsync();
 
-        if (!response.IsSuccessStatusCode || !double.TryParse(result, out var tax))
+        if (!response.IsSuccessStatusCode || !double.TryParse(result, CultureInfo.InvariantCulture, out var tax))
         {
             _logger.LogError($"POST {_taxPath} Failed. {result}");
             return null;
