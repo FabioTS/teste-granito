@@ -39,15 +39,15 @@ spec:
               port: 80
             initialDelaySeconds: 15
             periodSeconds: 60
-          imagePullPolicy: IfNotPresent
-          image: "{{IMAGE}}:{{TAG}}"
+          imagePullPolicy: Always
+          image: "localhost:5000/calculatorapi:v1.1"
           env:
             - name: ASPNETCORE_ENV_HOST
               value: "Development"
             - name: CodeUrl
               value: "https://github.com/FabioTS/teste-granito"
             - name: TaxApiUrl
-              value: "http://taxapi.teste-granito:80/"
+              value: "http://taxapi-svc.teste-granito:80/"
             - name: GetTaxPath
               value: "tax"
 

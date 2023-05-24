@@ -55,6 +55,8 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
     c.IncludeXmlComments(xmlPath);
+    c.AddServer(new() { Url = "/calculatorapi", Description = "nginx rewrite path" });
+    c.AddServer(new() { Url = "/", Description = "localhost" });
 });
 #endregion
 

@@ -39,8 +39,8 @@ spec:
               port: 80
             initialDelaySeconds: 15
             periodSeconds: 60
-          imagePullPolicy: IfNotPresent
-          image: "{{IMAGE}}:{{TAG}}"
+          imagePullPolicy: Always
+          image: "localhost:5000/taxapi:v1.1"
           env:
             - name: ASPNETCORE_ENV_HOST
               value: "Development"

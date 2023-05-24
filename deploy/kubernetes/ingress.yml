@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: apis-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/proxy-body-size: "1m"
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /calculatorapi(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: calculatorapi-svc
+            port:
+              number: 80
+  - http:
+      paths:
+      - path: /taxapi(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: taxapi-svc
+            port:
+              number: 80
